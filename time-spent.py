@@ -42,14 +42,21 @@ def update_log(session_time):
         file.write(f"Total programming time (in seconds): {new_total}\n")
 
 
-
+#Debugging
+def debug():
+    session = time.time() - start_timestamp
+    update_log(session)
+    print(f"Total Time: {timeTransformer(get_total_time())}")
+    print(f"Running: {is_vscode_running()}")
 
 start_timestamp = None
 is_timing = False
-
+has_debugged = False
 # Update the log and print the total programming time
 while (True) :
     running = is_vscode_running()
+
+
 
     if running and not is_timing:
         start_timestamp = time.time()
@@ -65,5 +72,15 @@ while (True) :
     if not running and not is_timing:
         print("[Waiting for VS Code to start]")
 
-
+    if not has_debugged:
+        input_message = input("Enter 'd' to debug or any other key to continue: ")
+        if input_message.lower() == 'd':
+            debug()
+            has_debugged = True
+        else:
+            print("Debugging skipped.")
+            has_debugged = True
+        has_debugged = True
     time.sleep(1)
+
+
